@@ -11,7 +11,7 @@ import (
 
 func Generator(ctx context.Context, ch chan<- int64, fn func(int64)) {
 	n := int64(1)
-	defer close(ch) // Закрываем канал перед завершением работы
+	defer close(ch)
 	for {
 		select {
 		case <-ctx.Done():
@@ -47,8 +47,8 @@ func main() {
 
 	// Генератор чисел, исправлена гонка
 	go Generator(ctx, chIn, func(i int64) {
-		atomic.AddInt64(&inputSum, i)   // была гонка
-		atomic.AddInt64(&inputCount, 1) // была гонка
+		atomic.AddInt64(&inputSum, i)
+		atomic.AddInt64(&inputCount, 1)
 	})
 
 	const NumOut = 5
